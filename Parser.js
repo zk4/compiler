@@ -4,7 +4,7 @@ class Parser {
   constructor(){
     this._tokenizer = new Tokenizer();
   }
-  parser(string){
+  parse(string){
     this._string =string;
     this._tokenizer.init(string);
 
@@ -20,7 +20,7 @@ class Parser {
    */
   Program(){
     return {
-      type: 'Pgrogram',
+      type: 'Program',
       body: this.Literal()
     }
   }
