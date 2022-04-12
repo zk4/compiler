@@ -19,9 +19,22 @@ class Parser {
    *  :NumericLiteral 
    */
   Program(){
-    return this.NumericLiteral();
+    switch(this._lookhead.type){
+      case 'NUMBER':
+        return this.NumericLiteral();
+      case 'STRING':
+        return this.StringLiteral();
+    }
 
   }
+  StringLiteral(){
+    const token = this._eat('STRING')
+    return {
+      type: 'StringLiteral',
+      value: token.value.slice(1,-1)
+    }
+  }
+
   NumericLiteral(){
     const token = this._eat('NUMBER')
     return {
