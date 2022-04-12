@@ -38,7 +38,9 @@ class Tokenizer {
       }
     }
 
-    return null;
+    return {
+      type: 'UNSUPPORTED',
+    };
   }
 }
 

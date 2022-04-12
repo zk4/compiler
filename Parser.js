@@ -16,14 +16,22 @@ class Parser {
   /**
    * Main entry point 
    * Program:
-   *  :NumericLiteral 
+   *  :Literal 
    */
   Program(){
+    return {
+      type: 'Pgrogram',
+      body: this.Literal()
+    }
+  }
+  Literal(){
     switch(this._lookhead.type){
       case 'NUMBER':
         return this.NumericLiteral();
       case 'STRING':
         return this.StringLiteral();
+      default:
+      throw new SyntaxError(`Literal: Unsupported`)
     }
 
   }
