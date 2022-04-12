@@ -1,3 +1,8 @@
+const Spec =[
+  [/^\d+/,'NUMBER'],
+  [/^"[^"]*"/,'STRING'],
+  [/^'[^']*'/,'STRING']
+]
 class Tokenizer {
 
   init(string) {
@@ -15,32 +20,30 @@ class Tokenizer {
       return null;
     }
     const string = this._string.slice(this._cursor);
-    if (!Number.isNaN(Number(string[0]))) {
-      let number = '';
-      while (!Number.isNaN(Number(string[this._cursor]))) {
-        number += string[this._cursor++];
-      }
-      return {
-        type: 'NUMBER',
-        value: number
-      }
-    }
-    if(string[0]==='"'){
-      let s = "";
-      do{
-        s+=string[this._cursor++];
-      }while(string[this._cursor]!=='"' && !this.isEOF())
-      // skip "
-      s+=string[this._cursor++];
-      return {
-        type: 'STRING',
-        value: s
-      }
-    }
 
-    return {
-      type: 'UNSUPPORTED',
-    };
+
+    for(const [regexp,tokenType] of Spec){
+      const tokenValue = this._match(regexp,string);
+
+      if(tokenValue == null){
+        continue
+      }
+
+      return {
+        type: tokenType,
+        value: tokenValue
+      }
+    }
+    throw new SyntaxError(`Unexpected token: "${string[0]}"`)
+  }
+
+  _match(regexp,string){
+    const matched = regexp.exec(string);
+    if(matched == null){
+      return null;
+    }
+    this._cursor += matched[0].length;
+    return matched[0];
   }
 }
 
