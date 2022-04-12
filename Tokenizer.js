@@ -1,9 +1,18 @@
 const Spec =[
   // whitespace:
   [/^\s+/,null],
+
   // skip single-line comments:
   [/^\/\/.*/,null],
+
+  // skip multi-line comments:
+  // /* xxx */
+  [/^\/\*[\s\S]*?\*\//,null],
+
+  // Numbers:
   [/^\d+/,'NUMBER'],
+
+  // Strings:
   [/^"[^"]*"/,'STRING'],
   [/^'[^']*'/,'STRING']
 ]
