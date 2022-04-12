@@ -1,4 +1,8 @@
 const Spec =[
+  // whitespace:
+  [/^\s+/,null],
+  // skip single-line comments:
+  [/^\/\/.*/,null],
   [/^\d+/,'NUMBER'],
   [/^"[^"]*"/,'STRING'],
   [/^'[^']*'/,'STRING']
@@ -26,7 +30,11 @@ class Tokenizer {
       const tokenValue = this._match(regexp,string);
 
       if(tokenValue == null){
-        continue
+        continue;
+      }
+      if(tokenType == null){
+        // should skip token, e.g. whitespace
+        return this.getNextToken();
       }
 
       return {

@@ -31,6 +31,7 @@ class Parser {
       case 'STRING':
         return this.StringLiteral();
       default:
+
       throw new SyntaxError(`Literal: Unsupported`)
     }
 
